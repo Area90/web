@@ -57,6 +57,7 @@ body.light header{
 
 .logo{
   height:48px;
+  filter:drop-shadow(0 0 12px var(--verde));
 }
 
 .modeBtn{
@@ -84,13 +85,14 @@ body.light header{
   position:fixed;
   bottom:20px;
   right:20px;
-  width:240px;
+  width:260px;
   aspect-ratio:16/9;
   border-radius:14px;
   overflow:hidden;
   display:none;
   z-index:1500;
   box-shadow:0 15px 35px rgba(0,0,0,.7);
+  transition:.3s;
 }
 
 .miniVideo video{
@@ -135,6 +137,11 @@ body.light header{
   padding:12px;
   cursor:pointer;
   transition:.3s;
+}
+
+.card:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 25px var(--verde);
 }
 
 .card img{
@@ -225,13 +232,14 @@ body.light .tallaBtn{
 
 /* 📱 MÓVILES */
 @media (max-width:768px){
-
   .hero video{
     height:35vh;
   }
 
   .miniVideo{
-    display:none !important;
+    width:160px;
+    bottom:15px;
+    right:15px;
   }
 
   .modal-content{
@@ -245,14 +253,6 @@ body.light .tallaBtn{
   .modal img{
     width:100%;
     max-width:260px;
-  }
-
-  header{
-    padding:10px 15px;
-  }
-
-  .logo{
-    height:42px;
   }
 }
 
@@ -280,8 +280,9 @@ body.light .tallaBtn{
   </video>
 </div>
 
+<!-- MINI VIDEO FLOTANTE -->
 <div class="miniVideo" id="mini">
-  <video autoplay muted loop>
+  <video autoplay muted loop playsinline>
     <source src="publi.mp4">
   </video>
 </div>
@@ -324,12 +325,10 @@ function toggleMode(){
   localStorage.setItem("mode",light?"light":"dark");
 }
 
-/* ===== MINI VIDEO ===== */
+/* ===== MINI VIDEO SCROLL ===== */
 const mini=document.getElementById("mini");
 window.addEventListener("scroll",()=>{
-  if(window.innerWidth>768){
-    mini.style.display=window.scrollY>350?"block":"none";
-  }
+  mini.style.display = window.scrollY>350 ? "block":"none";
 });
 
 /* ===== PRODUCTOS ===== */
