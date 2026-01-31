@@ -8,6 +8,9 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet"/>
 
+<!-- ICONOS OFICIALES INSTAGRAM & TIKTOK -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
 <style>
 
 /* ================= VARIABLES ================= */
@@ -70,9 +73,7 @@ body.light header{
 }
 
 /* ================= HERO ================= */
-.hero{
-  margin-top:70px;
-}
+.hero{ margin-top:70px; }
 
 .hero video{
   width:100%;
@@ -92,13 +93,53 @@ body.light header{
   display:none;
   z-index:1500;
   box-shadow:0 15px 35px rgba(0,0,0,.7);
-  transition:.3s;
 }
 
 .miniVideo video{
   width:100%;
   height:100%;
   object-fit:cover;
+}
+
+/* ================= REDES SOCIALES ================= */
+.socials{
+  position:fixed;
+  left:15px;
+  bottom:20px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  z-index:1600;
+}
+
+.social-btn{
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  text-decoration:none;
+  box-shadow:0 10px 25px rgba(0,0,0,.4);
+  transition:.3s;
+}
+
+.social-btn i{
+  font-size:24px;
+}
+
+.social-btn:hover{
+  transform:scale(1.1);
+}
+
+.social-ig{
+  background:linear-gradient(45deg,#f58529,#dd2a7b,#8134af,#515bd4);
+}
+
+.social-tt{
+  background:#000;
+  border:2px solid #25F4EE;
 }
 
 /* ================= FILTROS ================= */
@@ -228,20 +269,24 @@ body.light .tallaBtn{
   margin-top:15px;
 }
 
+.whatsapp.disabled{
+  opacity:.5;
+  pointer-events:none;
+  filter:grayscale(1);
+}
+
 /* ================= RESPONSIVE ================= */
-
-/* 📱 MÓVILES */
 @media (max-width:768px){
-  .hero video{
-    height:35vh;
-  }
-
+  .hero video{ height:35vh; }
   .miniVideo{
     width:160px;
     bottom:15px;
     right:15px;
   }
-
+  .socials{
+    left:10px;
+    bottom:15px;
+  }
   .modal-content{
     flex-direction:column;
     align-items:center;
@@ -249,14 +294,8 @@ body.light .tallaBtn{
     max-height:90vh;
     overflow-y:auto;
   }
-
-  .modal img{
-    width:100%;
-    max-width:260px;
-  }
 }
 
-/* 💻 PANTALLAS GRANDES */
 @media (min-width:1400px){
   .grid{
     max-width:1300px;
@@ -280,11 +319,20 @@ body.light .tallaBtn{
   </video>
 </div>
 
-<!-- MINI VIDEO FLOTANTE -->
 <div class="miniVideo" id="mini">
   <video autoplay muted loop playsinline>
     <source src="publi.mp4">
   </video>
+</div>
+
+<!-- REDES SOCIALES -->
+<div class="socials">
+  <a href="https://www.instagram.com/area90_col" target="_blank" class="social-btn social-ig">
+    <i class="fa-brands fa-instagram"></i>
+  </a>
+  <a href="https://www.tiktok.com/@area.905?lang=es" target="_blank" class="social-btn social-tt">
+    <i class="fa-brands fa-tiktok"></i>
+  </a>
 </div>
 
 <div class="filters">
@@ -305,7 +353,7 @@ body.light .tallaBtn{
       <p id="mInfo"></p>
       <h4>Selecciona tu talla</h4>
       <div id="tallasContainer" class="tallas"></div>
-      <a id="mWsp" class="whatsapp" target="_blank">Comprar por WhatsApp</a>
+      <a id="mWsp" class="whatsapp disabled" target="_blank">Comprar por WhatsApp</a>
     </div>
   </div>
 </div>
@@ -325,7 +373,7 @@ function toggleMode(){
   localStorage.setItem("mode",light?"light":"dark");
 }
 
-/* ===== MINI VIDEO SCROLL ===== */
+/* ===== MINI VIDEO ===== */
 const mini=document.getElementById("mini");
 window.addEventListener("scroll",()=>{
   mini.style.display = window.scrollY>350 ? "block":"none";
@@ -346,6 +394,7 @@ const productos=[
 const grid=document.getElementById("grid");
 const modal=document.getElementById("modal");
 const tallasContainer=document.getElementById("tallasContainer");
+const mWsp=document.getElementById("mWsp");
 
 function render(){
   grid.innerHTML="";
@@ -368,10 +417,15 @@ function filtrar(t){
 
 function abrir(id){
   const p=productos.find(x=>x.id===id);
+
   mImg.src=p.img;
   mTitulo.innerText=p.nombre;
   mInfo.innerText=`Stock: ${p.stock}`;
+
   tallasContainer.innerHTML="";
+  mWsp.classList.add("disabled");
+  mWsp.removeAttribute("href");
+
   p.tallas.split("-").forEach(t=>{
     const b=document.createElement("div");
     b.className="tallaBtn";
@@ -379,15 +433,18 @@ function abrir(id){
     b.onclick=()=>{
       document.querySelectorAll(".tallaBtn").forEach(x=>x.classList.remove("active"));
       b.classList.add("active");
-      mWsp.href=`https://wa.me/573236883981?text=${encodeURIComponent("Hola quiero la camiseta "+p.nombre+" talla "+t)}`;
-    }
+      const texto=`Hola quiero la camiseta ${p.nombre} talla ${t}`;
+      mWsp.href=`https://wa.me/573236883981?text=${encodeURIComponent(texto)}`;
+      mWsp.classList.remove("disabled");
+    };
     tallasContainer.appendChild(b);
   });
+
   modal.style.display="flex";
 }
 
 document.querySelector(".close").onclick=()=>modal.style.display="none";
-modal.onclick=e=>{if(e.target===modal)modal.style.display="none";}
+modal.onclick=e=>{ if(e.target===modal) modal.style.display="none"; };
 
 </script>
 
