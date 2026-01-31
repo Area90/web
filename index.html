@@ -47,9 +47,8 @@ header{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:12px 30px;
+  padding:12px 20px;
   z-index:1000;
-  transition:.3s;
 }
 
 body.light header{
@@ -57,13 +56,7 @@ body.light header{
 }
 
 .logo{
-  height:55px;
-  filter:drop-shadow(0 0 12px var(--verde));
-  transition:.4s;
-}
-
-.logo:hover{
-  transform:scale(1.08);
+  height:48px;
 }
 
 .modeBtn{
@@ -76,11 +69,13 @@ body.light header{
 }
 
 /* ================= HERO ================= */
-.hero{margin-top:80px;}
+.hero{
+  margin-top:70px;
+}
 
 .hero video{
   width:100%;
-  height:60vh;
+  height:50vh;
   object-fit:cover;
 }
 
@@ -89,7 +84,7 @@ body.light header{
   position:fixed;
   bottom:20px;
   right:20px;
-  width:260px;
+  width:240px;
   aspect-ratio:16/9;
   border-radius:14px;
   overflow:hidden;
@@ -107,18 +102,17 @@ body.light header{
 /* ================= FILTROS ================= */
 .filters{
   text-align:center;
-  margin:30px 0;
+  margin:25px 10px;
 }
 
 .filters button{
-  padding:10px 20px;
-  margin:5px;
+  padding:8px 16px;
+  margin:6px;
   border-radius:20px;
   background:var(--card);
   color:var(--text);
   border:none;
   cursor:pointer;
-  transition:.2s;
 }
 
 .filters button:hover{
@@ -129,23 +123,18 @@ body.light header{
 /* ================= GRID ================= */
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:25px;
-  padding:20px 40px 120px;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:20px;
+  padding:15px;
 }
 
 /* ================= CARDS ================= */
 .card{
   background:var(--card);
-  border-radius:20px;
-  padding:15px;
+  border-radius:18px;
+  padding:12px;
   cursor:pointer;
   transition:.3s;
-}
-
-.card:hover{
-  transform:scale(1.05);
-  box-shadow:0 0 25px var(--verde);
 }
 
 .card img{
@@ -155,6 +144,7 @@ body.light header{
 
 .stock{
   color:var(--verde);
+  font-size:.9rem;
 }
 
 /* ================= MODAL ================= */
@@ -165,30 +155,29 @@ body.light header{
   justify-content:center;
   align-items:center;
   background:rgba(0,0,0,.9);
-  backdrop-filter:blur(15px);
   z-index:2000;
 }
 
 .modal-content{
-  width:750px;
-  max-width:95%;
+  width:95%;
+  max-width:800px;
   background:var(--card);
-  border-radius:25px;
-  padding:30px;
+  border-radius:22px;
+  padding:20px;
   display:flex;
-  gap:30px;
+  gap:20px;
   position:relative;
 }
 
 .modal img{
-  width:300px;
-  border-radius:18px;
+  width:260px;
+  border-radius:16px;
 }
 
 .close{
   position:absolute;
   top:12px;
-  right:18px;
+  right:16px;
   font-size:22px;
   cursor:pointer;
 }
@@ -196,18 +185,17 @@ body.light header{
 /* ================= TALLAS ================= */
 .tallas{
   display:flex;
-  gap:10px;
+  gap:8px;
   flex-wrap:wrap;
-  margin-top:12px;
+  margin-top:10px;
 }
 
 .tallaBtn{
-  padding:8px 14px;
+  padding:7px 12px;
   border-radius:10px;
   background:#222;
   border:1px solid #333;
   cursor:pointer;
-  transition:.2s;
 }
 
 body.light .tallaBtn{
@@ -215,8 +203,8 @@ body.light .tallaBtn{
   border-color:#ccc;
 }
 
-.tallaBtn:hover,
-.tallaBtn.active{
+.tallaBtn.active,
+.tallaBtn:hover{
   background:var(--verde);
   color:black;
   font-weight:bold;
@@ -225,12 +213,55 @@ body.light .tallaBtn{
 /* ================= WHATSAPP ================= */
 .whatsapp{
   background:#25D366;
-  padding:12px 20px;
+  padding:12px 18px;
   border-radius:14px;
   color:white;
   text-decoration:none;
   display:inline-block;
   margin-top:15px;
+}
+
+/* ================= RESPONSIVE ================= */
+
+/* 📱 MÓVILES */
+@media (max-width:768px){
+
+  .hero video{
+    height:35vh;
+  }
+
+  .miniVideo{
+    display:none !important;
+  }
+
+  .modal-content{
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    max-height:90vh;
+    overflow-y:auto;
+  }
+
+  .modal img{
+    width:100%;
+    max-width:260px;
+  }
+
+  header{
+    padding:10px 15px;
+  }
+
+  .logo{
+    height:42px;
+  }
+}
+
+/* 💻 PANTALLAS GRANDES */
+@media (min-width:1400px){
+  .grid{
+    max-width:1300px;
+    margin:auto;
+  }
 }
 
 </style>
@@ -244,7 +275,7 @@ body.light .tallaBtn{
 </header>
 
 <div class="hero">
-  <video autoplay muted loop>
+  <video autoplay muted loop playsinline>
     <source src="publi.mp4">
   </video>
 </div>
@@ -268,14 +299,11 @@ body.light .tallaBtn{
   <div class="modal-content">
     <span class="close">✖</span>
     <img id="mImg">
-
     <div>
       <h2 id="mTitulo"></h2>
       <p id="mInfo"></p>
-
-      <h4>Selecciona tu talla:</h4>
+      <h4>Selecciona tu talla</h4>
       <div id="tallasContainer" class="tallas"></div>
-
       <a id="mWsp" class="whatsapp" target="_blank">Comprar por WhatsApp</a>
     </div>
   </div>
@@ -283,24 +311,25 @@ body.light .tallaBtn{
 
 <script>
 
-/* ===== RESTAURAR MODO ===== */
+/* ===== MODO OSCURO ===== */
 if(localStorage.getItem("mode")==="light"){
   document.body.classList.add("light");
   document.querySelector(".modeBtn").innerText="☀️";
 }
 
-/* ===== TOGGLE MODE ===== */
 function toggleMode(){
   document.body.classList.toggle("light");
-  const light = document.body.classList.contains("light");
-  document.querySelector(".modeBtn").innerText = light ? "☀️" : "🌙";
-  localStorage.setItem("mode", light ? "light" : "dark");
+  const light=document.body.classList.contains("light");
+  document.querySelector(".modeBtn").innerText=light?"☀️":"🌙";
+  localStorage.setItem("mode",light?"light":"dark");
 }
 
 /* ===== MINI VIDEO ===== */
 const mini=document.getElementById("mini");
 window.addEventListener("scroll",()=>{
-  mini.style.display = window.scrollY>350 ? "block":"none";
+  if(window.innerWidth>768){
+    mini.style.display=window.scrollY>350?"block":"none";
+  }
 });
 
 /* ===== PRODUCTOS ===== */
@@ -319,9 +348,6 @@ const grid=document.getElementById("grid");
 const modal=document.getElementById("modal");
 const tallasContainer=document.getElementById("tallasContainer");
 
-let tallaSeleccionada="Sin seleccionar";
-
-/* ===== RENDER ===== */
 function render(){
   grid.innerHTML="";
   productos.forEach(p=>{
@@ -335,45 +361,30 @@ function render(){
 }
 render();
 
-/* ===== FILTRO ===== */
 function filtrar(t){
   document.querySelectorAll(".card").forEach(c=>{
-    c.style.display=(t==='all'||c.classList.contains(t))?'block':'none';
+    c.style.display=(t==="all"||c.classList.contains(t))?"block":"none";
   });
 }
 
-/* ===== MODAL ===== */
 function abrir(id){
   const p=productos.find(x=>x.id===id);
-
   mImg.src=p.img;
   mTitulo.innerText=p.nombre;
   mInfo.innerText=`Stock: ${p.stock}`;
-
-  tallaSeleccionada="Sin seleccionar";
   tallasContainer.innerHTML="";
-
   p.tallas.split("-").forEach(t=>{
-    const btn=document.createElement("div");
-    btn.className="tallaBtn";
-    btn.innerText=t;
-
-    btn.onclick=()=>{
-      document.querySelectorAll(".tallaBtn").forEach(b=>b.classList.remove("active"));
-      btn.classList.add("active");
-      tallaSeleccionada=t;
-      actualizarLink(p.nombre);
+    const b=document.createElement("div");
+    b.className="tallaBtn";
+    b.innerText=t;
+    b.onclick=()=>{
+      document.querySelectorAll(".tallaBtn").forEach(x=>x.classList.remove("active"));
+      b.classList.add("active");
+      mWsp.href=`https://wa.me/573236883981?text=${encodeURIComponent("Hola quiero la camiseta "+p.nombre+" talla "+t)}`;
     }
-    tallasContainer.appendChild(btn);
+    tallasContainer.appendChild(b);
   });
-
-  actualizarLink(p.nombre);
   modal.style.display="flex";
-}
-
-function actualizarLink(nombre){
-  const texto=`Hola quiero la camiseta ${nombre} talla ${tallaSeleccionada}`;
-  mWsp.href=`https://wa.me/573236883981?text=${encodeURIComponent(texto)}`;
 }
 
 document.querySelector(".close").onclick=()=>modal.style.display="none";
